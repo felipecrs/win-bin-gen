@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+
+const packageJsonPath = path.join(process.cwd(), 'package.json');
+
+const { name, bin } = JSON.parse(fs.readFileSync(packageJsonPath).toString());
+
+let bins = {};
+if(typeof bin == 'string') {
+    bins[name] = bin;
+} else {
+    bins = bin;
+}
+
+const contribPath = path.join(__dirname, '..', 'contrib');
+const shimTemplatePath = path.join(contribPath, 'shim.shim.template');
+const shimExePath = path.join(contribPath, 'shim.exe');
+
+const shimTemplate = fs.readFileSync(shimTemplatePath).toString();
+
+for(binName in bins) {
+    const binPath = bins[binName];
+    const binFileName = path.basename(binPath);
+    const binDirName = path.dirname(binPath);
+
+    const shim = shimTemplate.replace(/\{\{binFileName\}\}/g, binFileName);
+    const shimPath = path.join(binDirName, `${binName}.shim`);
+
+    console.log(`Creating ${shimPath}...`)
+    fs.writeFileSync(shimPath, shim);
+
+    const binExePath = path.join(binDirName, `${binName}.exe`);
+
+    console.log(`Creating ${binExePath}...`)
+    fs.copyFileSync(shimExePath, binExePath)
+}

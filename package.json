@@ -1,0 +1,14 @@
+{
+  "name": "win-bin-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/win-bin-gen",
+  "bin": "bin/win-bin-gen",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "curl -fsSL bin/win-bin-gen"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

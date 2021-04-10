@@ -1,0 +1,2 @@
+path = node.exe
+args = %~dp0\{{binFileName}}

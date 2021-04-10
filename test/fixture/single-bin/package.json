@@ -1,0 +1,10 @@
+{
+    "name": "single-bin",
+    "bin": "bin/singe-bin",
+    "scripts": {
+        "prepare": "win-bin-gen"
+    },
+    "devDependencies": {
+        "win-bin-gen": "../../.."
+    }
+}
